@@ -26,7 +26,7 @@ gulp.task('inject', () => {
 		directory: './public/lib',
 		ignorePath: '../../public'
 	}
-	return gulp.src('./src/view/*.html')
+	return gulp.src('./src/view/*.jade')
 		.pipe(wiredep(options))
 		.pipe(gulpInject(injectSrc, injectOptions))
 		.pipe(gulp.dest('./src/view'));
