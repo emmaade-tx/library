@@ -26,10 +26,10 @@ gulp.task('inject', () => {
 		directory: './public/lib',
 		ignorePath: '../../public'
 	}
-	return gulp.src('./src/view/*.ejs')
+	return gulp.src('./src/views/*.ejs')
 		.pipe(wiredep(options))
 		.pipe(gulpInject(injectSrc, injectOptions))
-		.pipe(gulp.dest('./src/view'));
+		.pipe(gulp.dest('./src/views'));
 });
 
 gulp.task('default', ['inject'], () => {
