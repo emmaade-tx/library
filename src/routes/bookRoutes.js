@@ -1,61 +1,41 @@
 const express = require('express');
-
 const bookRouter = express.Router();
+const mongodb = require('mongodb').MongoClient;
+const objectId = require('mongodb').ObjectID;
 
 const router = (nav) => {
-	const books = [
-		{
-			title: 'War and Peace',
-			genre: 'Historical Fiction',
-			author: 'Lev Brendowski',
-			read: 'false'
-		},
-		{
-			title: '30 Laws Of Power',
-			genre: 'Power and Politics',
-			author: 'Dan Brown',
-			read: 'false'
-		},
-		{
-			title: 'Eat The frogs',
-			genre: 'Motivation and Inspiration',
-			author: 'Brian Tracy',
-			read: 'false'
-		},
-		{
-			title: 'Rich Dad Poor dad',
-			genre: 'Money Making and Success',
-			author: 'Robert Kiyosaki',
-			read: 'false'
-		},
-		{
-			title: 'Ideas rules the world',
-			genre: 'Christian and Motivation',
-			author: 'Sam Adeyemi',
-			read: 'false'
-		} 
-	];
-
-	bookRouter.route('/') 
+	bookRouter.route('/')
 		.get((req, res) => {
-			res.render('books', {
-			title: 'Books', 
-			nav: nav,
-			books: books
+			const url = 'mongodb://localhost/libraryApp';
+			mongodb.connect(url, (err, db) => {
+				const collection = db.collection('books');
+				collection.find({}).toArray( (err, results) => {
+					res.render('books', {
+					title: 'Books', 
+					nav: nav,
+					books: results
+					});
+				});
+			});
 		});
-	});
 
 	bookRouter.route('/:id')
 		.get((req, res) => {
-			const id = req.params.id;
-			res.render('book', {
-			title: 'Book', 
-			nav: nav,
-			book: books[id]
+			const id = new objectId(req.params.id);
+			const url = 'mongodb://localhost/libraryApp';
+			mongodb.connect(url, (err, db) => {
+				const collection = db.collection('books');
+				collection.findOne({_id: id}, (err, results) => {
+					res.render('book', {
+					title: 'Books', 
+					nav: nav,
+					book: results
+					});
+				});
+			});
 		});
-	});
 
 	return bookRouter;
-}
+};
 
 module.exports = router;
