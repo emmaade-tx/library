@@ -101,7 +101,26 @@
           
           
           <!--/stories-->
-          <div class="col-md-10 col-sm-9">    
+          <div class="row"></div>
+          <div class="col-md-2 col-sm-3 text-center">
+          <h4>Sign In Form</h4>
+          <hr/>
+            <form method="POST", action="auth/signin">
+              <label>User Name</label>
+              <br>
+              <input type="text" name="user_name" id="userName">
+              <br>
+              <label>Password</label>
+              <br>
+              <input type="password" name="password" id="password">
+              <br>
+              <input type="submit" value="Sign In">
+            </form>
+          </div>
+
+          <div class="col-md-10 col-sm-9">
+            <h4>Sign Up Form</h4>
+            <hr/>
             <form method="POST", action="auth/signup">
               <label>Full Name</label>
               <br>
@@ -117,6 +136,7 @@
               <br>
               <input type="submit" value="Sign up">
             </form>
+          </div>
           </div>
           <hr>
           <!--/stories-->
